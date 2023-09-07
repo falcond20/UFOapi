@@ -29,7 +29,7 @@ async function getSightings() {
       if (error) {
         throw error;
       }
-      response.status(200).json(results.rows);
+     return response.status(200).json(results.rows);
     });
   };
 
@@ -88,7 +88,7 @@ console.log("database started");
 
 //console.log(await getSightingsByID(13224));
 
-//console.log(await getSightings());
+console.log(await getSightings());
 
 export default {
   getSightings,

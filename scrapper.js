@@ -30,7 +30,7 @@ export async function getUpdate() {
    let id;
       var results = [];
       try {
-        const url = "https://nuforc.org/webreports/ndxlNC.html";
+        const url = "https://nuforc.org/webreports/ndxp230519.html";
     
         const { data } = await axios.get(url);
         //console.log(data);

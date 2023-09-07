@@ -4,24 +4,27 @@ import bodyParser from 'body-parser'
 import{getUpdate} from './scrapper.js'
 import getSightings from './queriesDB.js'
 import dotenv from 'dotenv';
-import { port } from './config.js';
-import { host } from './config.js';
+import { config } from 'dotenv';
+//import { port } from './config.js';
+//import { host } from './config.js';
 import Pool from 'pg-pool';
 
+config();
 
 const pool = new Pool({
-  user: process.env.user,
-  host: process.env.host,
+  user: process.env.DBuser,
+  host: process.env.DBhost,
   database: process.env.database,
-  password: process.env.password,
-  port: process.env.port,
+  password: process.env.DBpassword,
+  port: process.env.DBport,
 })
 
-
+console.log(process.env.DBuser);
+console.log(process.env.NODE_ENV)
 const app = express();
 
-//const host = 'localhost';
-//const port = 8000;
+const host = process.env.AppHost;
+const port = 8000;
 
 
 app.use(bodyParser.json())
@@ -30,12 +33,9 @@ app.use(
     extended: true,
   })
 )
-
+// check every 24 hrs for new data
 setInterval(getUpdate, 1000 * 60 * 60 * 24);
-// const server = http.createServer(requestListener);
-// server.listen(port, host, () => {
-//   console.log(`Server is running on http://${host}:${port}`);
-// });
+
 
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
@@ -45,12 +45,13 @@ app.get('/', (request, response) => {
 
 
 app.get('/getSightings', (request, response) => {
+  console.log(request.route);
   pool.query('SELECT * FROM sightings', (error, results) => {
     if (error) {
       throw error
     }
     response.status(200).json(results.rows)
-    console.log(results.rows);
+    //console.log(results.rows);
   })
 });
 
