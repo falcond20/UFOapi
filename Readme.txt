@@ -1,5 +1,26 @@
 Here is how to run the server and Database
 Install Nodejs on your local Machine and create a fork copy of the repo
+ - add the forked project 
+ -  run : npm init
+        : npm install
+
+Upon succesful installation
+to start the project 
+
+run : node server.js
+
+-- THe application uses .env to store sensitive information to connect to the database
+ - create a .env file within the project /UFO
+ - add the following variables
+
+DBuser = 'firstuser'
+DBhost = localhost
+database = ufodb
+DBpassword = password
+DBport = 5432
+AppHost = localhost;
+PORT = 8000;
+
 
 
 You will need to setup PostgresSQL database in order to run the application
@@ -14,7 +35,7 @@ https://www.postgresql.org/docs/current/backup-dump.html
 
 TO import the database to your postgresql
 run this in terminal 
-pg_restore -c -U firstuser -W -F t -d ufodb ufodb.tar
+pg_restore -c -U firstuser -W -F t -d ufodb UFO/UFO_db/ufodb.tar
 
 
 
