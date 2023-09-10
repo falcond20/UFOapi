@@ -1,12 +1,16 @@
 import { urlencoded } from "express";
 import Pool from "pg-pool";
+
+config();
+
 const pool = new Pool({
-  user: "firstuser",
-  host: "localhost",
-  database: "ufodb",
-  password: "password",
-  port: 5432,
-});
+  user: process.env.DBuser,
+  host: process.env.DBhost,
+  database: process.env.database,
+  password: process.env.DBpassword,
+  port: process.env.DBport,
+})
+
 
 
 async function getSightingsByID(id) {
