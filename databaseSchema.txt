@@ -1,0 +1,77 @@
+
+• Location
+• Date of occurrence
+• Details of sighting
+
+CREATE TABLE sightings (
+  id  SERIAL PRIMARY KEY,
+  location VARCHAR (255),
+  country VARCHAR (57),
+  city VARCHAR(50),
+  state VARCHAR(50),
+  shape  VARCHAR(50),
+  details TEXT,
+  date DATE NOT NULL,
+  dateTime DATETIME	 NOT NULL
+);
+
+INSERT INTO sightings (id, location, country, city, state, shape, details, date, dateTime)
+  VALUES ('13244', 'kumasi', 'Ghana', 'Ashanti', 'NC', 'round', 'Object round in space and fast vasished', '08/31/2023',CURRENT_TIMESTAMP);
+
+
+  SELECT * FROM sightings;
+
+
+
+
+
+
+
+
+
+   const tableData = [];
+
+        table.find('tr').each((i, row) => {
+            // Initialize an empty object to store the row data
+            const rowData = {};
+        
+            // Iterate over each cell of the row using the find and each methods
+            $(row).find('td, th').each((j, cell) => {
+                // Add the cell data to the row data object
+                var date = rowData[$(cell).text()] = j;
+                rowData[$(cell).text()] = j;
+
+                console.log(rowData);
+
+                for (let index = 0; index < rowData.length; index++) {
+                    const element = rowData[index];
+                    console.log(element);
+                }
+               
+                //tableData.push({date: j.date})
+            });
+        
+            // Add the row data to the table data array
+            
+
+           // tableData.push(rowData);
+        });
+        
+        // Print the table data
+        console.log(tableData);
+        
+
+/* 
+         $("#sortable > thead > tr").each((index, element) => {
+          var state = $(element).find("td").text();      
+          var regular = $(element).find("tdr").text();      
+          var mid_grade = $(element).find("td").text();      
+          var premium = $(element).find("td").text();      
+          var diesel = $(element).find("td").text();            
+          results.push({state: state.trim(),
+                        regular: regular.trim(),
+                        mid_grade: mid_grade.trim(),
+                        premium: premium.trim(),
+                        diesel: diesel.trim()
+                      });
+        });  */

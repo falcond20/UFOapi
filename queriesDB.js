@@ -1,6 +1,6 @@
 import { urlencoded } from "express";
 import Pool from "pg-pool";
-import { config } from 'dotenv';
+import { config } from "dotenv";
 config();
 
 const pool = new Pool({
@@ -9,13 +9,18 @@ const pool = new Pool({
   database: process.env.database,
   password: process.env.DBpassword,
   port: process.env.DBport,
-})
+});
 
-
+function useRegex(input) {
+  let regex = /^\w+$/;
+  return regex.test(input);
+}
 
 async function getSightingsByID(id) {
   id = encodeURIComponent(id);
-  pool.query(
+  console.log(id);
+
+  let  jex = pool.query(
     "SELECT * FROM sightings WHERE id = $1",
     [id],
     (error, results) => {
@@ -29,39 +34,13 @@ async function getSightingsByID(id) {
 
 async function getSightings() {
   const getSight = (request, response) => {
-    pool.query("SELECT * FROM sightings", (error, results) => {
+   pool.query("SELECT * FROM sightings", (error, results) => {
       if (error) {
         throw error;
       }
-     return response.status(200).json(results.rows);
+      return response.status(200).json(results.rows);
     });
   };
-
-
-  //const getSightings = (request, response) => {
-
-  //}
-
-  function getSightingLoc(request, response) {
-    function useRegex(input) {
-      let regex = /[a-z]+/g;
-      console.log(regex.test(input));
-      return regex.test(input);
-    }
-    var loc = useRegex(request.body);
-
-    pool.query(
-      //"SELECT * FROM sightings WHERE location =" + request.body,
-    //  "PREPARE getSights (int) AS SELECT * FROM users u, logs l WHERE u.usrid=$1 AND u.usrid=l.usrid AND l.date = $2;EXECUTE usrrptplan(1, current_date);"
-      "SELECT * FROM sightings WHERE location =" + request.body,
-      (error, results) => {
-        if (error) {
-          throw error;
-        }
-        response.status(201).json(results.rows);
-      }
-    );
-  }
 }
 
 export async function createSighting(params) {
@@ -74,7 +53,7 @@ export async function createSighting(params) {
     date = params.Posted,
     dateTime = params.DateTime;
 
-  if (getSightingsByID(id) == id) {
+  if (await getSightingsByID(id) == id) {
     return "Sighting already exist";
   } else {
     let res = pool.query(
@@ -91,12 +70,9 @@ export async function createSighting(params) {
   }
 }
 console.log("database started");
-
-//console.log(await getSightingsByID(13224));
-
-console.log(await getSightings());
+let test = await getSightingsByID('1015221945122222Maybe15seconds')
+console.log(test);
 
 export default {
   getSightings,
 };
-//export { createSighting };
