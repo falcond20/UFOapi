@@ -9,6 +9,7 @@ to start the project
 
 run : node server.js
 
+
 -- THe application uses .env to store sensitive information to connect to the database
  - create a .env file within the project /UFO
  - add the following variables
@@ -35,4 +36,10 @@ https://www.postgresql.org/docs/current/backup-dump.html
 
 TO import the database to your postgresql
 run this in terminal 
-pg_restore -c -U firstuser -W -F t -d ufodb UFO/UFO_db/ufodb.tar
+pg_restore -c -U firstuser -W -F t -d ufodb UFO/UFO_db/ufodb.tar - this last address being the location of the database file
+ -  once imported start the ufodb databse and once running query
+  SELECT * FROM sightings;
+  - if data populates, then db is working as expected
+  
+In the API collection folder,
+There is a collection file you can import to your postman to test the api endpoints

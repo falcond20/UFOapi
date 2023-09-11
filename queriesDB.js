@@ -1,6 +1,6 @@
 import { urlencoded } from "express";
 import Pool from "pg-pool";
-
+import { config } from 'dotenv';
 config();
 
 const pool = new Pool({
@@ -51,6 +51,8 @@ async function getSightings() {
     var loc = useRegex(request.body);
 
     pool.query(
+      //"SELECT * FROM sightings WHERE location =" + request.body,
+    //  "PREPARE getSights (int) AS SELECT * FROM users u, logs l WHERE u.usrid=$1 AND u.usrid=l.usrid AND l.date = $2;EXECUTE usrrptplan(1, current_date);"
       "SELECT * FROM sightings WHERE location =" + request.body,
       (error, results) => {
         if (error) {
