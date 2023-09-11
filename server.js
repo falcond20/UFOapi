@@ -5,8 +5,7 @@ import { getUpdate } from "./scrapper.js";
 import getSightings from "./queriesDB.js";
 import dotenv from "dotenv";
 import { config } from "dotenv";
-//import { port } from './config.js';
-//import { host } from './config.js';
+
 import Pool from "pg-pool";
 
 config();
@@ -28,7 +27,7 @@ const port = 8000;
 
 function useRegex(input) {
   let regex = /^\w+$/;
-  //console.log(regex.test(input));
+
   return regex.test(input);
 }
 
@@ -46,18 +45,12 @@ app.get("/", (request, response) => {
 });
 
 app.get("/getSightings", (request, response) => {
-  //console.log(request.route);
-
-  
-//pool.query("PREPARE allSights AS SELECT * FROM sightings EXECUTE allSights()", (error, results) => {
-  
   pool.query("SELECT * FROM sightings", (error, results) => {
     if (error) {
       console.log(error);
       return response.status(404).json(results.rows);
     }
     response.status(200).json(results.rows);
-    //console.log(results.rows);
   });
 });
 
@@ -95,22 +88,22 @@ function isDateValid(dateStr) {
 app.get("/getSightingByDate", (request, response) => {
   var date = request.body.date;
 
-
-
-  //console.log(encodeURICo mponent(request.body.date));
   if (isDateValid(date)) {
-    
     const text = "SELECT * FROM sightings WHERE date = $1";
     const values = [date];
     pool.query(text, values, (error, results) => {
       if (error) {
         console.log(error);
-        return response.status(404).json("Error : Provide a valid date MM/DD/YYYY or YYYY/MM/DD");
+        return response
+          .status(404)
+          .json("Error : Provide a valid date MM/DD/YYYY or YYYY/MM/DD");
       }
       response.status(201).json(results.rows);
     });
   } else {
-    response.status(404).json("Error : Provide a valid Date MM/DD/YYYY or YYYY/MM/DD");
+    response
+      .status(404)
+      .json("Error : Provide a valid Date MM/DD/YYYY or YYYY/MM/DD");
   }
 });
 
